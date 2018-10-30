@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+    <header>
+        <nav class="hdNav clearfix">
+            <a href="#" class="logo">logo</a>
+            <div class="shortcut">
+                <ul class="clearfix">
+                    <li><a href="#">新 闻</a></li>
+                    <li><a href="#">视 频</a></li>
+                    <li><a href="#">图 片</a></li>
+                    <li><a href="#">音 乐</a></li>
+                    <li><a href="#">知 道</a></li>
+                </ul>
+            </div>
+            <div class="seekBaidu">
+                <input type="text" class="submit-b"/>
+                <input type="submit" value="百度" class="submit-a"/>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="board"  id="keyboard">
+
+        </div>
+    </main>
+    <footer></footer>
+    <script>
+        var keys = {
+            '0': ['Q','W','E','R','T','Y','U','I','O','P'],
+            '1': ['A','S','D','F','G','H','J','K','L'],
+            '2': ['Z','X','C','V','B','N','M'],
+            'length': 3
+        };
+        var hash={
+            'Q':'www.qq.com',
+            'W':'www.w3c.com',
+            'E':'www.ele.com',
+            'R':'www.renren.com',
+            'T':'www.zhihu.com',
+            'Y':'www.youtube.com',
+            'U':'www.uc.com'
+        };
+        hashInlocalStorage = JSON.parse(localStorage.getItem('zzz')||'null');
+        if(hashInlocalStorage){
+            hash = hashInlocalStorage
+        }
+
+        index=0;
+        while(index < keys['length']){
+            div1= document.createElement('div');
+            div1.className='div-a';
+            keyboard.appendChild(div1);
+            row=keys[index];
+
+            index2=0;
+            while(index2<row['length']){
+                kbd1 = document.createElement('kbd');
+                kbd1.textContent=row[index2];
+                div1.appendChild(kbd1);
+                kbd1.className='key-a'
+                buttonX=document.createElement('button');
+                buttonX.textContent='编辑';
+                buttonX.id=row[index2];
+                img=document.createElement('img');
+                img.src='http://'+hash[row[index2]]+'/favicon.ico'
+                kbd1.appendChild(img);
+                kbd1.appendChild(buttonX);
+                buttonX.onclick=function (qwer){
+                    tkey=qwer['target']['id'];
+                    webURL=prompt('给我一个网址')
+                    hash[tkey]=webURL;
+                    localStorage.setItem('zzz',JSON.stringify(hash))
+                    console.log(hash);
+                };
+                index2++
+            }
+            index++
+        }
+        document.onkeypress = function (asdf){
+            keyName=asdf['key']
+            website=hash[keyName]
+            window.open('http://'+website,'_blank')
+        }
+    </script>
+</body>
+</html>
